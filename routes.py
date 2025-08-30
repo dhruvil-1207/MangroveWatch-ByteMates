@@ -209,6 +209,37 @@ def api_reports():
     
     return jsonify(reports_data)
 
+# DEBUG ROUTE - Add this to check database contents
+@app.route('/debug')
+def debug():
+    from models import User, Report
+    users = User.query.all()
+    reports = Report.query.all()
+    
+    html = f"""
+    <h2>Database Debug - Replit</h2>
+    <p><strong>Total Users:</strong> {len(users)}</p>
+    <p><strong>Total Reports:</strong> {len(reports)}</p>
+    
+    <h3>Users:</h3>
+    <ul>
+    """
+    
+    for user in users:
+        html += f"<li>{user.username} - {user.email} - {user.user_type}</li>"
+    
+    html += """
+    </ul>
+    <h3>Reports:</h3>
+    <ul>
+    """
+    
+    for report in reports:
+        html += f"<li><strong>{report.title}</strong> - {report.incident_type} - Status: {report.status} - By: {report.reporter.username}</li>"
+    
+    html += "</ul><br><a href='/'>Back to Home</a>"
+    return html
+
 # Error handlers
 @app.errorhandler(404)
 def not_found_error(error):

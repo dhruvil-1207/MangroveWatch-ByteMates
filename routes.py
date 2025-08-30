@@ -235,6 +235,8 @@ def submit_report():
         
         # Parse incident date
         try:
+            if not isinstance(incident_date_str, str) or not incident_date_str:
+                raise ValueError("No date string provided")
             incident_date = datetime.strptime(incident_date_str, '%Y-%m-%d')
         except ValueError:
             flash('Invalid date format.', 'error')
@@ -388,14 +390,6 @@ def debug():
     
     html += "</ul><br><a href='/'>Back to Home</a>"
     return html
-
-@app.route('/how-it-works')
-def how_it_works():
-    return render_template('how_it_works.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 # Error handlers
 @app.errorhandler(404)

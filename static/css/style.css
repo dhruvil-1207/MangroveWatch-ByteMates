@@ -161,33 +161,212 @@ body {
     color: white; /* White text when background becomes green */
 }
 
-/* Form Enhancements */
-.form-control {
+/* Form Enhancements - FIXED FOR BETTER CONTRAST */
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="search"],
+input.form-control {
     border-radius: var(--border-radius);
-    border: 1px solid #ced4da;
+    border: 2px solid #ced4da;
     padding: 0.75rem 1rem;
     transition: var(--transition-smooth);
-    background-color: white; /* White background for inputs */
-    color: #2c3e50; /* Dark text for inputs */
+    background-color: #ffffff !important; /* Force white background */
+    color: #212529 !important; /* Force dark text */
+    font-weight: 500;
 }
 
-.form-control:focus {
+.form-control::placeholder,
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="tel"]::placeholder,
+input[type="url"]::placeholder,
+input[type="number"]::placeholder,
+input[type="search"]::placeholder {
+    color: #6c757d !important; /* Gray placeholder text */
+    opacity: 1;
+}
+
+.form-control:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="time"]:focus,
+input[type="search"]:focus {
     border-color: var(--primary-green);
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    color: #2c3e50; /* Maintain dark text on focus */
+    background-color: #ffffff !important; /* Maintain white background on focus */
+    color: #212529 !important; /* Maintain dark text on focus */
+}
+
+.form-control:disabled,
+input:disabled {
+    background-color: #e9ecef !important;
+    color: #6c757d !important;
+    opacity: 1;
+}
+
+/* Select inputs */
+.form-select,
+select.form-control,
+select {
+    border-radius: var(--border-radius);
+    border: 2px solid #ced4da;
+    padding: 0.75rem 1rem;
+    transition: var(--transition-smooth);
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    font-weight: 500;
+}
+
+.form-select:focus,
+select.form-control:focus,
+select:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+/* Textarea */
+textarea.form-control,
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 2px solid #ced4da;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+}
+
+textarea.form-control:focus,
+textarea:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+/* Checkbox and Radio inputs */
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--primary-green);
+    margin-right: 0.5rem;
 }
 
 .form-label {
     font-weight: 600;
-    color: #495057;
+    color: #2c3e50 !important; /* Strong dark color for labels */
     margin-bottom: 0.5rem;
+    font-size: 0.95rem;
 }
 
 .input-group-text {
-    background: #f8f9fa;
-    border-color: #ced4da;
+    background: #f8f9fa !important;
+    border: 2px solid #ced4da;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
-    color: #495057; /* Dark text for input group text */
+    color: #495057 !important; /* Dark text for input group text */
+    font-weight: 500;
+}
+
+/* Form validation styles */
+.form-control.is-valid {
+    border-color: var(--primary-green);
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+.form-control.is-invalid {
+    border-color: var(--danger-red);
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+.valid-feedback {
+    color: var(--primary-green) !important;
+    font-weight: 500;
+}
+
+.invalid-feedback {
+    color: var(--danger-red) !important;
+    font-weight: 500;
+}
+
+/* Form text and help text - FIXED CONTRAST */
+.form-text,
+.form-help,
+.help-text,
+.form-description,
+.input-help,
+small.text-muted,
+.small,
+.form-control + small,
+.form-control + .text-muted,
+.form-control + .form-text,
+.form-group small,
+.mb-3 small,
+div small {
+    color: #6c757d !important; /* Muted but readable gray */
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* Error and validation messages */
+.error-message,
+.validation-message,
+.field-error,
+.form-error {
+    color: var(--danger-red) !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* Success messages */
+.success-message,
+.field-success {
+    color: var(--primary-green) !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* Warning messages */
+.warning-message,
+.field-warning {
+    color: var(--warning-orange) !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* Info messages */
+.info-message,
+.field-info {
+    color: var(--accent-blue) !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
 }
 
 /* Alert Enhancements */
@@ -541,9 +720,15 @@ a:hover {
         color: #000 !important; /* Black text for printing */
         background-color: white !important;
     }
+    
+    .form-control {
+        background-color: white !important;
+        color: #000 !important;
+        border-color: #000 !important;
+    }
 }
 
-/* Dark Mode Support */
+/* Dark Mode Support - IMPROVED FORM CONTRAST */
 @media (prefers-color-scheme: dark) {
     :root {
         --bg-color: #1a1a1a;
@@ -572,16 +757,109 @@ a:hover {
         color: var(--text-color);
     }
     
-    .form-control {
-        background-color: var(--card-bg);
-        border-color: var(--border-color);
-        color: var(--text-color);
+    /* FIXED: Dark mode form controls with better contrast */
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="search"],
+    textarea,
+    select {
+        background-color: #3a3a3a !important; /* Darker gray background */
+        border-color: #555555 !important; /* Lighter border */
+        color: #ffffff !important; /* White text */
+    }
+    
+    .form-control::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: #adb5bd !important; /* Light gray placeholder */
+        opacity: 1;
+    }
+    
+    .form-control:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        background-color: #3a3a3a !important;
+        border-color: var(--primary-green) !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+    
+    .form-control:disabled,
+    input:disabled,
+    textarea:disabled,
+    select:disabled {
+        background-color: #2d2d2d !important;
+        color: #6c757d !important;
+        border-color: #404040 !important;
     }
     
     .input-group-text {
-        background-color: var(--card-bg);
-        border-color: var(--border-color);
-        color: var(--text-color);
+        background-color: #404040 !important;
+        border-color: #555555 !important;
+        color: #e0e0e0 !important;
+    }
+    
+    .form-label {
+        color: #e0e0e0 !important; /* Light text for dark mode labels */
+    }
+    
+    /* Dark mode form text and help text */
+    .form-text,
+    .form-help,
+    .help-text,
+    .form-description,
+    .input-help,
+    small.text-muted,
+    .small,
+    .form-control + small,
+    .form-control + .text-muted,
+    .form-control + .form-text,
+    .form-group small,
+    .mb-3 small,
+    div small {
+        color: #adb5bd !important; /* Light gray for dark mode */
+    }
+    
+    /* Dark mode validation messages */
+    .valid-feedback {
+        color: #20c997 !important; /* Lighter green for dark mode */
+    }
+    
+    .invalid-feedback {
+        color: #ff6b6b !important; /* Lighter red for dark mode */
+    }
+    
+    .error-message,
+    .validation-message,
+    .field-error,
+    .form-error {
+        color: #ff6b6b !important;
+    }
+    
+    .success-message,
+    .field-success {
+        color: #20c997 !important;
+    }
+    
+    .warning-message,
+    .field-warning {
+        color: #ffd43b !important;
+    }
+    
+    .info-message,
+    .field-info {
+        color: #74c0fc !important;
     }
     
     .location-info {
@@ -607,6 +885,51 @@ a:hover {
     }
 }
 
+/* ADDITIONAL: Force light mode form styling regardless of system preference */
+.light-mode-forms .form-control,
+.light-mode-forms .form-select,
+.light-mode-forms input,
+.light-mode-forms textarea,
+.light-mode-forms select {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border-color: #ced4da !important;
+}
+
+.light-mode-forms .form-control::placeholder,
+.light-mode-forms input::placeholder,
+.light-mode-forms textarea::placeholder {
+    color: #6c757d !important;
+}
+
+.light-mode-forms .form-control:focus,
+.light-mode-forms .form-select:focus,
+.light-mode-forms input:focus,
+.light-mode-forms textarea:focus,
+.light-mode-forms select:focus {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border-color: var(--primary-green) !important;
+}
+
+.light-mode-forms .form-label {
+    color: #2c3e50 !important;
+}
+
+.light-mode-forms .input-group-text {
+    background-color: #f8f9fa !important;
+    color: #495057 !important;
+    border-color: #ced4da !important;
+}
+
+.light-mode-forms .form-text,
+.light-mode-forms .form-help,
+.light-mode-forms .help-text,
+.light-mode-forms small,
+.light-mode-forms .text-muted {
+    color: #6c757d !important;
+}
+
 /* Accessibility Enhancements */
 .sr-only {
     position: absolute;
@@ -628,7 +951,7 @@ a:hover {
     outline-offset: 2px;
 }
 
-/* High contrast mode support */
+/* High contrast mode support - IMPROVED */
 @media (prefers-contrast: high) {
     .card {
         border: 2px solid #000;
@@ -644,6 +967,45 @@ a:hover {
     
     body {
         color: #000 !important; /* Ensure black text in high contrast mode */
+    }
+    
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="time"],
+    input[type="search"],
+    textarea,
+    select {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+    }
+    
+    .form-control:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border-color: #000000 !important;
+        box-shadow: 0 0 0 3px #000000;
+    }
+    
+    .form-label,
+    .form-text,
+    .form-help,
+    .help-text,
+    small {
+        color: #000000 !important;
+        font-weight: 700;
     }
 }
 

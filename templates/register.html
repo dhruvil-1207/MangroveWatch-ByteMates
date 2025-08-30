@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Community Mangrove Watch{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white text-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-user-plus me-2"></i>Join Our Community
+                    </h3>
+                    <p class="mb-0 small">Become a guardian of mangrove ecosystems</p>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" id="registerForm">
+                        <!-- Basic Information -->
+                        <h6 class="text-success mb-3">
+                            <i class="fas fa-user me-2"></i>Basic Information
+                        </h6>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label fw-bold">Username *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-at text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control" id="username" name="username" required 
+                                           placeholder="Choose a unique username">
+                                </div>
+                                <div class="form-text">Must be at least 3 characters</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label fw-bold">Email Address *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-envelope text-muted"></i>
+                                    </span>
+                                    <input type="email" class="form-control" id="email" name="email" required 
+                                           placeholder="your@email.com">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="password" class="form-label fw-bold">Password *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-lock text-muted"></i>
+                                    </span>
+                                    <input type="password" class="form-control" id="password" name="password" required 
+                                           placeholder="Create a strong password">
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye" id="eyeIcon"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">Minimum 6 characters</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="confirm_password" class="form-label fw-bold">Confirm Password *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-check-circle text-muted"></i>
+                                    </span>
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required 
+                                           placeholder="Repeat your password">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Personal Details -->
+                        <hr class="my-4">
+                        <h6 class="text-success mb-3">
+                            <i class="fas fa-id-card me-2"></i>Personal Details
+                        </h6>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="full_name" class="form-label fw-bold">Full Name</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" 
+                                       placeholder="Your full name (optional)">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="phone" class="form-label fw-bold">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" 
+                                       placeholder="+1234567890">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="organization" class="form-label fw-bold">Organization</label>
+                                <input type="text" class="form-control" id="organization" name="organization" 
+                                       placeholder="NGO, Government, University, etc.">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="user_type" class="form-label fw-bold">User Type</label>
+                                <select class="form-select" id="user_type" name="user_type">
+                                    <option value="community" selected>Community Member</option>
+                                    <option value="ngo">NGO Representative</option>
+                                    <option value="researcher">Researcher</option>
+                                    <option value="authority">Government Authority</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="location" class="form-label fw-bold">Location</label>
+                            <input type="text" class="form-control" id="location" name="location" 
+                                   placeholder="City, Region, or Coastal Area">
+                            <div class="form-text">Help us understand which areas you'll be monitoring</div>
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                <label class="form-check-label small" for="terms">
+                                    I agree to the <strong>Terms of Service</strong> and understand that my reports will be shared with relevant authorities for conservation purposes. I also agree to the <strong>Privacy Policy</strong> regarding data collection and usage.
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-shield-alt me-2"></i>Create Account
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="text-center">
+                        <p class="mb-3 text-muted">Already have an account?</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-success">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Registration Benefits -->
+            <div class="card mt-4 border-0 bg-light">
+                <div class="card-body p-4">
+                    <h6 class="text-success mb-3 text-center">What You Get as a Member</h6>
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6 text-center">
+                            <i class="fas fa-camera text-primary fs-3 mb-2"></i>
+                            <p class="small mb-0">Report Incidents</p>
+                        </div>
+                        <div class="col-md-3 col-6 text-center">
+                            <i class="fas fa-map-marked-alt text-success fs-3 mb-2"></i>
+                            <p class="small mb-0">Track Locations</p>
+                        </div>
+                        <div class="col-md-3 col-6 text-center">
+                            <i class="fas fa-chart-bar text-info fs-3 mb-2"></i>
+                            <p class="small mb-0">View Progress</p>
+                        </div>
+                        <div class="col-md-3 col-6 text-center">
+                            <i class="fas fa-award text-warning fs-3 mb-2"></i>
+                            <p class="small mb-0">Earn Recognition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Toggle password visibility
+document.getElementById('togglePassword').addEventListener('click', function() {
+    const password = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    
+    if (password.type === 'password') {
+        password.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        password.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+});
+
+// Real-time password confirmation
+document.getElementById('confirm_password').addEventListener('input', function() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = this.value;
+    
+    if (confirmPassword && password !== confirmPassword) {
+        this.classList.add('is-invalid');
+        if (!document.querySelector('.password-mismatch')) {
+            const errorDiv = document.createElement('div');
+            errorDiv.classList.add('invalid-feedback', 'password-mismatch');
+            errorDiv.textContent = 'Passwords do not match';
+            this.parentNode.appendChild(errorDiv);
+        }
+    } else {
+        this.classList.remove('is-invalid');
+        const errorDiv = document.querySelector('.password-mismatch');
+        if (errorDiv) errorDiv.remove();
+    }
+});
+
+// Form validation
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const terms = document.getElementById('terms').checked;
+    
+    // Clear previous errors
+    document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+    
+    let hasErrors = false;
+    
+    // Username validation
+    if (username.length < 3) {
+        document.getElementById('username').classList.add('is-invalid');
+        addError('username', 'Username must be at least 3 characters long');
+        hasErrors = true;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        document.getElementById('email').classList.add('is-invalid');
+        addError('email', 'Please enter a valid email address');
+        hasErrors = true;
+    }
+    
+    // Password validation
+    if (password.length < 6) {
+        document.getElementById('password').classList.add('is-invalid');
+        addError('password', 'Password must be at least 6 characters long');
+        hasErrors = true;
+    }
+    
+    // Password confirmation
+    if (password !== confirmPassword) {
+        document.getElementById('confirm_password').classList.add('is-invalid');
+        addError('confirm_password', 'Passwords do not match');
+        hasErrors = true;
+    }
+    
+    // Terms agreement
+    if (!terms) {
+        document.getElementById('terms').classList.add('is-invalid');
+        hasErrors = true;
+        alert('Please agree to the Terms of Service and Privacy Policy');
+    }
+    
+    if (hasErrors) {
+        e.preventDefault();
+        // Scroll to first error
+        document.querySelector('.is-invalid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+function addError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('invalid-feedback');
+    errorDiv.textContent = message;
+    field.parentNode.appendChild(errorDiv);
+}
+</script>
+{% endblock %}

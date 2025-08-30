@@ -1,0 +1,388 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Community Mangrove Watch{% endblock %}
+
+{% block head %}
+<style>
+    .report-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .report-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.75rem;
+    }
+    .stats-card {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        color: white;
+    }
+    .activity-timeline {
+        position: relative;
+        padding-left: 2rem;
+    }
+    .activity-timeline::before {
+        content: '';
+        position: absolute;
+        left: 0.5rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #dee2e6;
+    }
+    .activity-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    .activity-item::before {
+        content: '';
+        position: absolute;
+        left: -1.25rem;
+        top: 0.25rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        background: #28a745;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 0 0 2px #28a745;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="text-success mb-1">Welcome back, {{ current_user.full_name or current_user.username }}!</h2>
+                    <p class="text-muted mb-0">
+                        {% if current_user.user_type == 'authority' %}
+                        Monitor incidents and coordinate conservation efforts
+                        {% else %}
+                        Track your contributions to mangrove conservation
+                        {% endif %}
+                    </p>
+                </div>
+                <div>
+                    <a href="{{ url_for('report') }}" class="btn btn-success">
+                        <i class="fas fa-plus me-2"></i>New Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stats-card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-exclamation-triangle fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ user_reports|length }}</h4>
+                    <p class="mb-0 small">Your Reports</p>
+                </div>
+            </div>
+        </div>
+        {% if current_user.user_type == 'authority' %}
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-eye fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ all_reports|length }}</h4>
+                    <p class="mb-0 small">Total Reports</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card bg-warning text-dark h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ all_reports|selectattr('status', 'equalto', 'pending')|list|length }}</h4>
+                    <p class="mb-0 small">Pending Review</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-check-circle fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ all_reports|selectattr('status', 'equalto', 'validated')|list|length }}</h4>
+                    <p class="mb-0 small">Validated</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-check-circle fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ user_reports|selectattr('status', 'equalto', 'validated')|list|length }}</h4>
+                    <p class="mb-0 small">Validated</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card bg-warning text-dark h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-hourglass-half fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ user_reports|selectattr('status', 'equalto', 'pending')|list|length }}</h4>
+                    <p class="mb-0 small">Under Review</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-shield-alt fs-1 mb-2 opacity-75"></i>
+                    <h4 class="mb-1">{{ user_reports|selectattr('status', 'equalto', 'resolved')|list|length }}</h4>
+                    <p class="mb-0 small">Resolved</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <!-- Recent Reports -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fas fa-list me-2"></i>
+                        {% if current_user.user_type == 'authority' %}Recent Reports{% else %}Your Reports{% endif %}
+                    </h5>
+                    {% if current_user.user_type == 'authority' %}
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" class="btn-check" name="reportFilter" id="filterAll" checked>
+                        <label class="btn btn-outline-primary" for="filterAll">All</label>
+                        
+                        <input type="radio" class="btn-check" name="reportFilter" id="filterPending">
+                        <label class="btn btn-outline-warning" for="filterPending">Pending</label>
+                        
+                        <input type="radio" class="btn-check" name="reportFilter" id="filterValidated">
+                        <label class="btn btn-outline-success" for="filterValidated">Validated</label>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% set reports_to_show = all_reports if current_user.user_type == 'authority' else user_reports %}
+                    {% if reports_to_show %}
+                    <div class="row g-3">
+                        {% for report in reports_to_show[:12] %}
+                        <div class="col-12 report-item" data-status="{{ report.status }}">
+                            <div class="card report-card h-100 border-start border-4 
+                                {% if report.severity == 'critical' %}border-danger
+                                {% elif report.severity == 'high' %}border-warning
+                                {% elif report.severity == 'medium' %}border-info
+                                {% else %}border-secondary{% endif %}">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="card-title mb-0">{{ report.title }}</h6>
+                                        <div class="d-flex gap-2">
+                                            <span class="badge 
+                                                {% if report.status == 'pending' %}bg-warning
+                                                {% elif report.status == 'validated' %}bg-success
+                                                {% elif report.status == 'investigating' %}bg-info
+                                                {% elif report.status == 'resolved' %}bg-primary
+                                                {% else %}bg-secondary{% endif %} status-badge">
+                                                {{ report.status.title() }}
+                                            </span>
+                                            <span class="badge 
+                                                {% if report.severity == 'critical' %}bg-danger
+                                                {% elif report.severity == 'high' %}bg-warning
+                                                {% elif report.severity == 'medium' %}bg-info
+                                                {% else %}bg-secondary{% endif %} status-badge">
+                                                {{ report.severity.title() }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="card-text text-muted small mb-2">
+                                        {{ report.description[:100] }}{% if report.description|length > 100 %}...{% endif %}
+                                    </p>
+                                    
+                                    <div class="row small text-muted">
+                                        <div class="col-md-6">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            {{ report.location_name or 'Location not specified' }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <i class="fas fa-clock me-1"></i>
+                                            {{ report.created_at.strftime('%b %d, %Y at %I:%M %p') }}
+                                        </div>
+                                        {% if current_user.user_type == 'authority' and report.reporter %}
+                                        <div class="col-md-6 mt-1">
+                                            <i class="fas fa-user me-1"></i>
+                                            {{ report.reporter.username }}
+                                        </div>
+                                        {% endif %}
+                                        <div class="col-md-6 mt-1">
+                                            <i class="fas fa-tag me-1"></i>
+                                            {{ report.incident_type.replace('_', ' ').title() }}
+                                        </div>
+                                    </div>
+                                    
+                                    {% if report.photo_filename %}
+                                    <div class="mt-2">
+                                        <i class="fas fa-camera text-primary me-1"></i>
+                                        <small class="text-primary">Photo attached</small>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fs-1 text-muted mb-3"></i>
+                        <h5 class="text-muted">No reports found</h5>
+                        <p class="text-muted mb-3">
+                            {% if current_user.user_type == 'authority' %}
+                            No incident reports have been submitted yet.
+                            {% else %}
+                            You haven't submitted any reports yet. Start protecting mangroves by reporting incidents in your area.
+                            {% endif %}
+                        </p>
+                        {% if current_user.user_type != 'authority' %}
+                        <a href="{{ url_for('report') }}" class="btn btn-success">
+                            <i class="fas fa-plus me-2"></i>Submit Your First Report
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Quick Actions -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('report') }}" class="btn btn-success">
+                            <i class="fas fa-camera me-2"></i>Report New Incident
+                        </a>
+                        <a href="{{ url_for('how_it_works') }}" class="btn btn-outline-info">
+                            <i class="fas fa-question-circle me-2"></i>How It Works
+                        </a>
+                        {% if current_user.user_type == 'authority' %}
+                        <button class="btn btn-outline-primary" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>Print Reports
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-user me-2"></i>Profile Info
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <strong>User Type:</strong>
+                        <span class="badge bg-primary ms-2">{{ current_user.user_type.replace('_', ' ').title() }}</span>
+                    </div>
+                    {% if current_user.organization %}
+                    <div class="mb-2">
+                        <strong>Organization:</strong> {{ current_user.organization }}
+                    </div>
+                    {% endif %}
+                    {% if current_user.location %}
+                    <div class="mb-2">
+                        <strong>Location:</strong> {{ current_user.location }}
+                    </div>
+                    {% endif %}
+                    <div class="mb-2">
+                        <strong>Member Since:</strong> {{ current_user.created_at.strftime('%B %Y') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history me-2"></i>Recent Activity
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if user_reports %}
+                    <div class="activity-timeline">
+                        {% for report in user_reports[:5] %}
+                        <div class="activity-item">
+                            <div class="small">
+                                <strong>{{ report.title }}</strong><br>
+                                <span class="text-muted">{{ report.created_at.strftime('%b %d, %Y') }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center text-muted py-3">
+                        <i class="fas fa-clock fs-3 mb-2"></i>
+                        <p class="mb-0">No recent activity</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Report filtering for authorities
+{% if current_user.user_type == 'authority' %}
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('input[name="reportFilter"]');
+    const reportItems = document.querySelectorAll('.report-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('change', function() {
+            const filter = this.id.replace('filter', '').toLowerCase();
+            
+            reportItems.forEach(item => {
+                if (filter === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    const status = item.dataset.status;
+                    if (status === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+});
+{% endif %}
+
+// Auto-refresh dashboard every 30 seconds for authorities
+{% if current_user.user_type == 'authority' %}
+setInterval(function() {
+    // Only refresh if user is still on the page
+    if (!document.hidden) {
+        location.reload();
+    }
+}, 30000);
+{% endif %}
+</script>
+{% endblock %}

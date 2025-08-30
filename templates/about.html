@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Community Mangrove Watch{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4 fw-bold mb-3">About Community Mangrove Watch</h1>
+            <p class="lead">Empowering communities to protect our coasts through technology and collective action</p>
+        </div>
+    </div>
+</div>
+
+<!-- Mission Section -->
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6">
+            <h2 class="text-success mb-4">Our Mission</h2>
+            <p class="lead mb-4">
+                To bridge the critical data gap in mangrove conservation by empowering coastal communities 
+                with technology that transforms passive observers into active environmental guardians.
+            </p>
+            <p class="mb-4">
+                We believe that those closest to the problem are best positioned to be part of the solution. 
+                Our platform creates a powerful feedback loop where local insights directly inform and 
+                accelerate official conservation action.
+            </p>
+            <blockquote class="blockquote border-start border-success border-4 ps-3">
+                <p class="mb-0 fst-italic">
+                    "Our goal is to create a powerful feedback loop where local insights directly 
+                    inform and accelerate official action, transforming passive observers into 
+                    active guardians of their environment."
+                </p>
+            </blockquote>
+        </div>
+        <div class="col-lg-6">
+            <div class="text-center">
+                <svg width="400" height="300" viewBox="0 0 400 300" class="img-fluid">
+                    <!-- Mission illustration -->
+                    <defs>
+                        <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Water background -->
+                    <rect x="0" y="180" width="400" height="120" fill="url(#waterGradient)"/>
+                    
+                    <!-- Mangrove trees -->
+                    <g id="mangrove-forest">
+                        <!-- Tree 1 -->
+                        <g transform="translate(80, 180)">
+                            <line x1="0" y1="0" x2="0" y2="-60" stroke="#8B4513" stroke-width="4"/>
+                            <path d="M0 0 Q-15 -20 -25 -40 Q-35 -60 -40 -80" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <path d="M0 0 Q15 -20 25 -40 Q35 -60 40 -80" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <ellipse cx="0" cy="-75" rx="20" ry="12" fill="#228B22"/>
+                        </g>
+                        
+                        <!-- Tree 2 -->
+                        <g transform="translate(160, 180)">
+                            <line x1="0" y1="0" x2="0" y2="-70" stroke="#8B4513" stroke-width="4"/>
+                            <path d="M0 0 Q-20 -25 -30 -50 Q-40 -70 -45 -90" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <path d="M0 0 Q20 -25 30 -50 Q40 -70 45 -90" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <ellipse cx="0" cy="-85" rx="25" ry="15" fill="#228B22"/>
+                        </g>
+                        
+                        <!-- Tree 3 -->
+                        <g transform="translate(240, 180)">
+                            <line x1="0" y1="0" x2="0" y2="-65" stroke="#8B4513" stroke-width="4"/>
+                            <path d="M0 0 Q-18 -22 -28 -45 Q-38 -65 -42 -85" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <path d="M0 0 Q18 -22 28 -45 Q38 -65 42 -85" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <ellipse cx="0" cy="-80" rx="22" ry="13" fill="#228B22"/>
+                        </g>
+                        
+                        <!-- Tree 4 -->
+                        <g transform="translate(320, 180)">
+                            <line x1="0" y1="0" x2="0" y2="-55" stroke="#8B4513" stroke-width="4"/>
+                            <path d="M0 0 Q-12 -18 -20 -35 Q-30 -55 -35 -75" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <path d="M0 0 Q12 -18 20 -35 Q30 -55 35 -75" stroke="#8B4513" stroke-width="3" fill="none"/>
+                            <ellipse cx="0" cy="-70" rx="18" ry="10" fill="#228B22"/>
+                        </g>
+                    </g>
+                    
+                    <!-- Community symbols -->
+                    <g id="community">
+                        <!-- People icons -->
+                        <g transform="translate(100, 250)" fill="#FFF">
+                            <circle cx="0" cy="-10" r="5"/>
+                            <rect x="-3" y="-5" width="6" height="12" rx="3"/>
+                        </g>
+                        <g transform="translate(130, 250)" fill="#FFF">
+                            <circle cx="0" cy="-10" r="5"/>
+                            <rect x="-3" y="-5" width="6" height="12" rx="3"/>
+                        </g>
+                        <g transform="translate(270, 250)" fill="#FFF">
+                            <circle cx="0" cy="-10" r="5"/>
+                            <rect x="-3" y="-5" width="6" height="12" rx="3"/>
+                        </g>
+                    </g>
+                    
+                    <!-- Technology connection -->
+                    <g stroke="#FFC107" stroke-width="2" fill="none" opacity="0.8">
+                        <path d="M115 240 Q200 200 285 240"/>
+                        <circle cx="200" cy="210" r="3" fill="#FFC107"/>
+                    </g>
+                    
+                    <!-- Protection shield -->
+                    <g transform="translate(200, 50)">
+                        <path d="M0 -20 Q-15 -20 -15 0 Q-15 15 0 25 Q15 15 15 0 Q15 -20 0 -20 Z" fill="#28a745" opacity="0.8"/>
+                        <path d="M-8 -5 L-3 0 L8 -12" stroke="white" stroke-width="2" fill="none"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Team Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-success">Meet Team ByteMates</h2>
+            <p class="lead text-muted">HackOut'25 - Passionate developers committed to environmental conservation</p>
+        </div>
+        
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="avatar bg-primary bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user-tie text-white fs-1"></i>
+                        </div>
+                        <h5 class="card-title text-success">Dhruvil Gandhi</h5>
+                        <p class="text-muted small mb-2">Team Leader</p>
+                        <p class="card-text">Leading the vision for community-driven conservation technology, bringing together technical expertise and environmental passion.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="avatar bg-success bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-code text-white fs-1"></i>
+                        </div>
+                        <h5 class="card-title text-success">Uday Gadhavi</h5>
+                        <p class="text-muted small mb-2">Developer</p>
+                        <p class="card-text">Full-stack developer focused on creating intuitive user experiences and robust backend systems for environmental monitoring.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body p-4">
+                        <div class="avatar bg-info bg-gradient rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <i class="fas fa-laptop-code text-white fs-1"></i>
+                        </div>
+                        <h5 class="card-title text-success">Neel Rathod</h5>
+                        <p class="text-muted small mb-2">Developer</p>
+                        <p class="card-text">Technology specialist working on AI validation systems and mobile-optimized interfaces for community engagement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Impact Section -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold text-success">Our Impact Vision</h2>
+        <p class="lead text-muted">Transforming conservation through community empowerment and technology</p>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="text-success mb-3">
+                        <i class="fas fa-eye me-2"></i>Enhanced Surveillance
+                    </h4>
+                    <p class="mb-3">
+                        Transforming limited official oversight into comprehensive, community-driven monitoring 
+                        that covers vast coastal areas with real-time incident detection and reporting.
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success me-2"></i>24/7 community monitoring network</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Geographic coverage expansion</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Early threat detection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="text-success mb-3">
+                        <i class="fas fa-users me-2"></i>Community Empowerment
+                    </h4>
+                    <p class="mb-3">
+                        Providing tools for active environmental participation, fostering a sense of ownership 
+                        and responsibility that creates lasting positive change in coastal communities.
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success me-2"></i>Active citizen participation</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Environmental stewardship culture</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Local knowledge integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="text-success mb-3">
+                        <i class="fas fa-chart-line me-2"></i>Data-Driven Action
+                    </h4>
+                    <p class="mb-3">
+                        Equipping authorities with precise, timely data for effective intervention, resource 
+                        allocation, and evidence-based policy making for sustainable mangrove management.
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success me-2"></i>Real-time decision support</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Evidence-based enforcement</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Resource optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="text-success mb-3">
+                        <i class="fas fa-leaf me-2"></i>Biodiversity Preservation
+                    </h4>
+                    <p class="mb-3">
+                        Direct contribution to protecting critical marine habitats and species through rapid 
+                        threat response and community-based conservation initiatives.
+                    </p>
+                    <ul class="list-unstyled small text-muted">
+                        <li><i class="fas fa-check text-success me-2"></i>Habitat protection</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Species conservation</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Ecosystem health monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technology Stack Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-success">Technology Stack</h2>
+            <p class="lead text-muted">Built on robust, scalable, and modern technologies</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="tech-icon bg-info bg-gradient text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i class="fab fa-react fs-3"></i>
+                    </div>
+                    <h6 class="fw-bold">React.js</h6>
+                    <p class="small text-muted">Dynamic, responsive user interface optimized for mobile-first experiences</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="tech-icon bg-success bg-gradient text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i class="fab fa-python fs-3"></i>
+                    </div>
+                    <h6 class="fw-bold">Python Flask</h6>
+                    <p class="small text-muted">Powerful backend leveraging Python's rich ecosystem for data processing and APIs</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="tech-icon bg-warning bg-gradient text-dark rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i class="fas fa-brain fs-3"></i>
+                    </div>
+                    <h6 class="fw-bold">AI/ML</h6>
+                    <p class="small text-muted">TensorFlow-powered validation engine for accurate incident verification</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="tech-icon bg-primary bg-gradient text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                        <i class="fas fa-database fs-3"></i>
+                    </div>
+                    <h6 class="fw-bold">PostgreSQL</h6>
+                    <p class="small text-muted">Robust storage with PostGIS for efficient geospatial data handling</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Future Roadmap Section -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold text-success">What's Next?</h2>
+        <p class="lead text-muted">Our vision extends beyond this hackathon</p>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start">
+                        <div class="roadmap-number bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <span class="fw-bold">1</span>
+                        </div>
+                        <div>
+                            <h5 class="text-primary mb-2">SMS Reporting Integration</h5>
+                            <p class="mb-0">Implement SMS-based reporting to reach communities in low-connectivity areas, ensuring no one is left out of the monitoring process.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start">
+                        <div class="roadmap-number bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <span class="fw-bold">2</span>
+                        </div>
+                        <div>
+                            <h5 class="text-success mb-2">Predictive Analytics</h5>
+                            <p class="mb-0">Develop AI models to identify at-risk zones based on historical data, weather patterns, and socio-economic factors for proactive conservation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start">
+                        <div class="roadmap-number bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <span class="fw-bold">3</span>
+                        </div>
+                        <div>
+                            <h5 class="text-warning mb-2">Expanded Rewards System</h5>
+                            <p class="mb-0">Forge partnerships with local businesses and environmental organizations to offer tangible, meaningful rewards for consistent contributions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-start">
+                        <div class="roadmap-number bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 40px; height: 40px;">
+                            <span class="fw-bold">4</span>
+                        </div>
+                        <div>
+                            <h5 class="text-info mb-2">Multi-Language Support</h5>
+                            <p class="mb-0">Translate the platform into local languages to enhance usability and inclusivity for diverse coastal communities worldwide.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="bg-success text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-3">Join Our Mission</h2>
+        <p class="lead mb-4">
+            Together, we can transform coastal conservation by harnessing the power of community and technology
+        </p>
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg px-5">
+            <i class="fas fa-hands-helping me-2"></i>Become a Guardian
+        </a>
+        {% else %}
+        <a href="{{ url_for('report') }}" class="btn btn-warning btn-lg px-5">
+            <i class="fas fa-shield-alt me-2"></i>Protect Our Mangroves
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

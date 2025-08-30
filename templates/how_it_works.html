@@ -1,0 +1,348 @@
+{% extends "base.html" %}
+
+{% block title %}How It Works - Community Mangrove Watch{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="display-4 fw-bold mb-3">How It Works</h1>
+            <p class="lead">From community report to official action - our streamlined workflow ensures every submission contributes to conservation</p>
+        </div>
+    </div>
+</div>
+
+<!-- Workflow Section -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="workflow-container">
+                <!-- Step 1: Report -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-6 order-md-1">
+                        <div class="step-content">
+                            <div class="step-number bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fs-4 fw-bold">1</span>
+                            </div>
+                            <h3 class="text-primary mb-3">REPORT</h3>
+                            <h4 class="mb-3">Community Members Submit Incidents</h4>
+                            <p class="text-muted mb-4">
+                                Citizens, fishermen, and coastal residents easily report environmental incidents directly from their mobile devices using our user-friendly web platform. No app installation required - just open your browser and start protecting your environment.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-camera text-primary me-2"></i>Geotagged photos with location data</li>
+                                <li class="mb-2"><i class="fas fa-edit text-primary me-2"></i>Detailed incident descriptions</li>
+                                <li class="mb-2"><i class="fas fa-mobile-alt text-primary me-2"></i>Mobile-optimized interface</li>
+                                <li class="mb-2"><i class="fas fa-clock text-primary me-2"></i>Real-time submission</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-md-2">
+                        <div class="text-center">
+                            <svg width="300" height="250" viewBox="0 0 300 250" class="img-fluid">
+                                <!-- Mobile device -->
+                                <rect x="100" y="50" width="100" height="150" rx="15" fill="#333" stroke="#555" stroke-width="2"/>
+                                <rect x="110" y="70" width="80" height="110" fill="#4A90E2"/>
+                                
+                                <!-- Camera icon -->
+                                <circle cx="150" cy="100" r="15" fill="white" opacity="0.9"/>
+                                <rect x="145" y="96" width="10" height="8" rx="2" fill="#333"/>
+                                <circle cx="150" cy="100" r="3" fill="#333"/>
+                                
+                                <!-- Location pin -->
+                                <g transform="translate(130, 130)">
+                                    <path d="M20 0 C20 -10, 10 -20, 0 -20 C-10 -20, -20 -10, -20 0 C-20 10, 0 20, 0 20 C0 20, 20 10, 20 0 Z" fill="#FF4444"/>
+                                    <circle cx="0" cy="-5" r="5" fill="white"/>
+                                </g>
+                                
+                                <!-- Signal waves -->
+                                <g transform="translate(220, 80)" stroke="#28a745" stroke-width="2" fill="none">
+                                    <path d="M0 0 Q-10 -10 -20 0 Q-10 10 0 0"/>
+                                    <path d="M5 0 Q-5 -15 -15 0 Q-5 15 5 0"/>
+                                    <path d="M10 0 Q0 -20 -10 0 Q0 20 10 0"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Validate -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-6">
+                        <div class="text-center">
+                            <svg width="300" height="250" viewBox="0 0 300 250" class="img-fluid">
+                                <!-- AI Brain -->
+                                <ellipse cx="150" cy="120" rx="60" ry="40" fill="#28a745" opacity="0.8"/>
+                                <ellipse cx="150" cy="120" rx="45" ry="30" fill="#34ce57" opacity="0.6"/>
+                                
+                                <!-- Neural network nodes -->
+                                <circle cx="130" cy="100" r="4" fill="white"/>
+                                <circle cx="150" cy="95" r="4" fill="white"/>
+                                <circle cx="170" cy="100" r="4" fill="white"/>
+                                <circle cx="140" cy="120" r="4" fill="white"/>
+                                <circle cx="160" cy="120" r="4" fill="white"/>
+                                <circle cx="130" cy="140" r="4" fill="white"/>
+                                <circle cx="150" cy="145" r="4" fill="white"/>
+                                <circle cx="170" cy="140" r="4" fill="white"/>
+                                
+                                <!-- Connections -->
+                                <g stroke="white" stroke-width="1">
+                                    <line x1="130" y1="100" x2="140" y2="120"/>
+                                    <line x1="150" y1="95" x2="140" y2="120"/>
+                                    <line x1="170" y1="100" x2="160" y2="120"/>
+                                    <line x1="140" y1="120" x2="130" y2="140"/>
+                                    <line x1="160" y1="120" x2="170" y2="140"/>
+                                    <line x1="140" y1="120" x2="150" y2="145"/>
+                                    <line x1="160" y1="120" x2="150" y2="145"/>
+                                </g>
+                                
+                                <!-- Satellite -->
+                                <g transform="translate(50, 40)">
+                                    <rect x="-10" y="-5" width="20" height="10" fill="#666"/>
+                                    <line x1="-15" y1="0" x2="-25" y2="-10" stroke="#FFD700" stroke-width="2"/>
+                                    <line x1="15" y1="0" x2="25" y2="-10" stroke="#FFD700" stroke-width="2"/>
+                                    <line x1="-15" y1="0" x2="-25" y2="10" stroke="#FFD700" stroke-width="2"/>
+                                    <line x1="15" y1="0" x2="25" y2="10" stroke="#FFD700" stroke-width="2"/>
+                                </g>
+                                
+                                <!-- Checkmark -->
+                                <g transform="translate(220, 60)">
+                                    <circle cx="0" cy="0" r="15" fill="#28a745"/>
+                                    <path d="M-6 0 L-2 4 L6 -4" stroke="white" stroke-width="3" fill="none"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="step-content">
+                            <div class="step-number bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fs-4 fw-bold">2</span>
+                            </div>
+                            <h3 class="text-success mb-3">VALIDATE</h3>
+                            <h4 class="mb-3">AI-Powered Verification</h4>
+                            <p class="text-muted mb-4">
+                                Our advanced system leverages AI and satellite imagery to automatically verify the accuracy and severity of submitted reports, ensuring data integrity and reducing false positives while maintaining rapid processing times.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-robot text-success me-2"></i>Machine learning validation algorithms</li>
+                                <li class="mb-2"><i class="fas fa-satellite text-success me-2"></i>Satellite imagery cross-reference</li>
+                                <li class="mb-2"><i class="fas fa-search text-success me-2"></i>Automated severity assessment</li>
+                                <li class="mb-2"><i class="fas fa-shield-alt text-success me-2"></i>False positive filtering</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Alert -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-6 order-md-1">
+                        <div class="step-content">
+                            <div class="step-number bg-warning text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fs-4 fw-bold">3</span>
+                            </div>
+                            <h3 class="text-warning mb-3">ALERT</h3>
+                            <h4 class="mb-3">Instant Authority Notification</h4>
+                            <p class="text-muted mb-4">
+                                Verified incidents instantly appear on our secure, centralized dashboard accessible to relevant government agencies, conservation NGOs, and environmental authorities, ensuring rapid awareness and response coordination.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-tachometer-alt text-warning me-2"></i>Real-time dashboard updates</li>
+                                <li class="mb-2"><i class="fas fa-lock text-warning me-2"></i>Secure authority access</li>
+                                <li class="mb-2"><i class="fas fa-bell text-warning me-2"></i>Automated notifications</li>
+                                <li class="mb-2"><i class="fas fa-map text-warning me-2"></i>Geographic incident mapping</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 order-md-2">
+                        <div class="text-center">
+                            <svg width="300" height="250" viewBox="0 0 300 250" class="img-fluid">
+                                <!-- Dashboard screen -->
+                                <rect x="50" y="50" width="200" height="130" rx="10" fill="#333" stroke="#555" stroke-width="2"/>
+                                <rect x="60" y="70" width="180" height="90" fill="#1a1a1a"/>
+                                
+                                <!-- Dashboard elements -->
+                                <rect x="70" y="80" width="160" height="20" fill="#FFC107" opacity="0.8"/>
+                                <text x="150" y="93" text-anchor="middle" fill="black" font-size="8" font-weight="bold">INCIDENT ALERT</text>
+                                
+                                <!-- Map representation -->
+                                <rect x="70" y="110" width="70" height="40" fill="#4A90E2" opacity="0.3"/>
+                                <circle cx="90" cy="125" r="3" fill="#FF4444"/>
+                                <circle cx="110" cy="135" r="3" fill="#FF4444"/>
+                                
+                                <!-- Stats -->
+                                <rect x="150" y="110" width="80" height="15" fill="#28a745" opacity="0.3"/>
+                                <rect x="150" y="130" width="80" height="15" fill="#dc3545" opacity="0.3"/>
+                                
+                                <!-- Alert icon -->
+                                <g transform="translate(150, 200)">
+                                    <polygon points="0,-15 -12,10 12,10" fill="#FFC107" stroke="#FF8C00" stroke-width="2"/>
+                                    <text x="0" y="3" text-anchor="middle" fill="#333" font-size="12" font-weight="bold">!</text>
+                                </g>
+                                
+                                <!-- Signal lines -->
+                                <g stroke="#FFC107" stroke-width="2">
+                                    <line x1="150" y1="50" x2="100" y2="30" opacity="0.7"/>
+                                    <line x1="150" y1="50" x2="200" y2="30" opacity="0.7"/>
+                                    <line x1="150" y1="50" x2="150" y2="30" opacity="0.7"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Act -->
+                <div class="row align-items-center mb-5">
+                    <div class="col-md-6">
+                        <div class="text-center">
+                            <svg width="300" height="250" viewBox="0 0 300 250" class="img-fluid">
+                                <!-- Government building -->
+                                <rect x="100" y="120" width="100" height="80" fill="#6c757d"/>
+                                <rect x="120" y="140" width="60" height="60" fill="#495057"/>
+                                
+                                <!-- Columns -->
+                                <rect x="110" y="100" width="10" height="100" fill="#adb5bd"/>
+                                <rect x="130" y="100" width="10" height="100" fill="#adb5bd"/>
+                                <rect x="150" y="100" width="10" height="100" fill="#adb5bd"/>
+                                <rect x="170" y="100" width="10" height="100" fill="#adb5bd"/>
+                                <rect x="190" y="100" width="10" height="100" fill="#adb5bd"/>
+                                
+                                <!-- Triangular roof -->
+                                <polygon points="95,100 150,70 205,100" fill="#495057"/>
+                                
+                                <!-- Flag -->
+                                <line x1="220" y1="80" x2="220" y2="40" stroke="#333" stroke-width="3"/>
+                                <rect x="220" y="40" width="25" height="15" fill="#28a745"/>
+                                
+                                <!-- Action arrows -->
+                                <g fill="#dc3545" transform="translate(50, 150)">
+                                    <polygon points="0,0 -10,-5 -5,0 -10,5" />
+                                </g>
+                                <g fill="#dc3545" transform="translate(250, 150)">
+                                    <polygon points="0,0 10,-5 5,0 10,5" />
+                                </g>
+                                
+                                <!-- Vehicles/enforcement -->
+                                <rect x="30" y="180" width="30" height="15" fill="#007bff" rx="3"/>
+                                <circle cx="38" cy="198" r="4" fill="#333"/>
+                                <circle cx="52" cy="198" r="4" fill="#333"/>
+                                
+                                <rect x="240" y="180" width="30" height="15" fill="#007bff" rx="3"/>
+                                <circle cx="248" cy="198" r="4" fill="#333"/>
+                                <circle cx="262" cy="198" r="4" fill="#333"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="step-content">
+                            <div class="step-number bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <span class="fs-4 fw-bold">4</span>
+                            </div>
+                            <h3 class="text-danger mb-3">ACT</h3>
+                            <h4 class="mb-3">Official Response & Enforcement</h4>
+                            <p class="text-muted mb-4">
+                                Government agencies and conservation organizations utilize this real-time, actionable data to deploy resources effectively, conduct thorough investigations, and implement appropriate enforcement measures to protect mangrove ecosystems.
+                            </p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-users text-danger me-2"></i>Resource deployment coordination</li>
+                                <li class="mb-2"><i class="fas fa-gavel text-danger me-2"></i>Enforcement action initiation</li>
+                                <li class="mb-2"><i class="fas fa-search text-danger me-2"></i>On-site investigation</li>
+                                <li class="mb-2"><i class="fas fa-chart-line text-danger me-2"></i>Impact assessment and monitoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Benefits Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-success">Why This Works</h2>
+            <p class="lead text-muted">Our streamlined process ensures maximum impact with minimal friction</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="text-center h-100">
+                    <div class="bg-success bg-gradient text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-clock fs-4"></i>
+                    </div>
+                    <h5 class="mb-3">Real-Time Response</h5>
+                    <p class="text-muted">Incidents are reported and validated within minutes, enabling rapid intervention before damage escalates.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="text-center h-100">
+                    <div class="bg-primary bg-gradient text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-users fs-4"></i>
+                    </div>
+                    <h5 class="mb-3">Community Empowerment</h5>
+                    <p class="text-muted">Local communities become active guardians, providing eyes and ears where official monitoring is limited.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="text-center h-100">
+                    <div class="bg-warning bg-gradient text-dark rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-shield-alt fs-4"></i>
+                    </div>
+                    <h5 class="mb-3">Data Integrity</h5>
+                    <p class="text-muted">AI validation ensures only legitimate incidents reach authorities, preventing resource waste on false alarms.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="text-center h-100">
+                    <div class="bg-info bg-gradient text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-chart-line fs-4"></i>
+                    </div>
+                    <h5 class="mb-3">Measurable Impact</h5>
+                    <p class="text-muted">Track conservation outcomes with detailed reporting and analytics on incident resolution and ecosystem health.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Getting Started Section -->
+<div class="bg-success text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-3">Ready to Start Protecting?</h2>
+        <p class="lead mb-4">Join our community of environmental guardians and start making a difference today</p>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row g-3">
+                    {% if not current_user.is_authenticated %}
+                    <div class="col-md-6">
+                        <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg w-100">
+                            <i class="fas fa-user-plus me-2"></i>Create Account
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg w-100">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="col-md-6">
+                        <a href="{{ url_for('report') }}" class="btn btn-warning btn-lg w-100">
+                            <i class="fas fa-camera me-2"></i>Report Incident
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light btn-lg w-100">
+                            <i class="fas fa-tachometer-alt me-2"></i>View Dashboard
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

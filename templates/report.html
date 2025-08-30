@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}Report Incident - Community Mangrove Watch{% endblock %}
+
+{% block head %}
+<style>
+    .location-info {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 10px;
+    }
+    .photo-preview {
+        max-width: 200px;
+        max-height: 200px;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Report Environmental Incident
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted mb-4">
+                        Help protect our mangrove ecosystems by reporting incidents in your area. 
+                        Your report will be reviewed and forwarded to relevant authorities.
+                    </p>
+                    
+                    <form action="{{ url_for('submit_report') }}" method="POST" enctype="multipart/form-data" id="reportForm">
+                        <!-- Basic Information -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label fw-bold">Incident Title *</label>
+                                <input type="text" class="form-control" id="title" name="title" required 
+                                       placeholder="Brief description of the incident">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="incident_date" class="form-label fw-bold">Date Observed *</label>
+                                <input type="date" class="form-control" id="incident_date" name="incident_date" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Incident Type and Severity -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="incident_type" class="form-label fw-bold">Incident Type *</label>
+                                <select class="form-select" id="incident_type" name="incident_type" required>
+                                    <option value="">Select incident type</option>
+                                    <option value="illegal_logging">Illegal Logging</option>
+                                    <option value="pollution">Pollution</option>
+                                    <option value="land_clearing">Land Clearing</option>
+                                    <option value="illegal_dumping">Illegal Dumping</option>
+                                    <option value="wildlife_disturbance">Wildlife Disturbance</option>
+                                    <option value="coastal_erosion">Coastal Erosion</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="severity" class="form-label fw-bold">Severity Level</label>
+                                <select class="form-select" id="severity" name="severity">
+                                    <option value="low">Low Impact</option>
+                                    <option value="medium" selected>Medium Impact</option>
+                                    <option value="high">High Impact</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label fw-bold">Detailed Description *</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required
+                                      placeholder="Provide detailed information about what you observed, including any relevant context or ongoing activities"></textarea>
+                        </div>
+                        
+                        <!-- Photo Upload -->
+                        <div class="mb-3">
+                            <label for="photo" class="form-label fw-bold">Photo Evidence</label>
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" capture="environment">
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i> Upload a clear photo of the incident. Accepted formats: JPG, PNG, GIF (max 16MB)
+                            </div>
+                            <div id="photoPreview" class="mt-2"></div>
+                        </div>
+                        
+                        <!-- Location Information -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Location Information</label>
+                            <button type="button" class="btn btn-outline-primary btn-sm ms-2" id="getLocationBtn">
+                                <i class="fas fa-map-marker-alt me-1"></i>Get Current Location
+                            </button>
+                            
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label for="latitude" class="form-label">Latitude</label>
+                                    <input type="number" class="form-control" id="latitude" name="latitude" step="any" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="longitude" class="form-label">Longitude</label>
+                                    <input type="number" class="form-control" id="longitude" name="longitude" step="any" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <label for="location_name" class="form-label">Location Description</label>
+                                <input type="text" class="form-control" id="location_name" name="location_name" 
+                                       placeholder="e.g., Near Sunset Beach, Mangrove Reserve Area">
+                            </div>
+                            
+                            <div id="locationInfo" class="location-info" style="display: none;">
+                                <h6><i class="fas fa-map-marker-alt text-primary"></i> Location Captured</h6>
+                                <p class="mb-0" id="locationDetails"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Important Notice -->
+            <div class="alert alert-info mt-4">
+                <h6><i class="fas fa-info-circle"></i> Important Notice</h6>
+                <ul class="mb-0 small">
+                    <li>Your report will be reviewed by our validation system and forwarded to relevant authorities</li>
+                    <li>Include as much detail as possible to help authorities take appropriate action</li>
+                    <li>For immediate emergencies, please also contact local authorities directly</li>
+                    <li>All reports are treated confidentially and your identity is protected</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Set today as default date
+document.getElementById('incident_date').valueAsDate = new Date();
+
+// Get current location
+document.getElementById('getLocationBtn').addEventListener('click', function() {
+    const btn = this;
+    const originalText = btn.innerHTML;
+    
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Getting Location...';
+    btn.disabled = true;
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                
+                document.getElementById('latitude').value = lat.toFixed(6);
+                document.getElementById('longitude').value = lng.toFixed(6);
+                
+                // Show location info
+                const locationInfo = document.getElementById('locationInfo');
+                const locationDetails = document.getElementById('locationDetails');
+                locationDetails.innerHTML = `Coordinates: ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
+                                           Accuracy: ±${position.coords.accuracy.toFixed(0)} meters`;
+                locationInfo.style.display = 'block';
+                
+                btn.innerHTML = '<i class="fas fa-check text-success me-1"></i>Location Captured';
+                btn.disabled = false;
+            },
+            function(error) {
+                let errorMsg = 'Unable to get location. ';
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        errorMsg += 'Location access was denied.';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        errorMsg += 'Location information is unavailable.';
+                        break;
+                    case error.TIMEOUT:
+                        errorMsg += 'Location request timed out.';
+                        break;
+                    default:
+                        errorMsg += 'An unknown error occurred.';
+                        break;
+                }
+                
+                alert(errorMsg + ' Please enter location manually or try again.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 300000
+            }
+        );
+    } else {
+        alert('Geolocation is not supported by this browser.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+});
+
+// Photo preview
+document.getElementById('photo').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('photoPreview');
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" class="photo-preview img-thumbnail mt-2" alt="Photo preview">`;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.innerHTML = '';
+    }
+});
+
+// Form validation
+document.getElementById('reportForm').addEventListener('submit', function(e) {
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const incidentType = document.getElementById('incident_type').value;
+    
+    if (!title || !description || !incidentType) {
+        e.preventDefault();
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    if (description.length < 20) {
+        e.preventDefault();
+        alert('Please provide a more detailed description (at least 20 characters).');
+        return;
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Community Mangrove Watch{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section bg-gradient-primary text-white">
+    <div class="container py-5">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">
+                    Protecting Our <span class="text-warning">Mangroves</span> Together
+                </h1>
+                <p class="lead mb-4">
+                    Empowering coastal communities to become active guardians of vital mangrove ecosystems through real-time incident reporting and community-driven conservation.
+                </p>
+                {% if not current_user.is_authenticated %}
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg px-4">
+                        <i class="fas fa-user-plus me-2"></i>Join Our Community
+                    </a>
+                    <a href="{{ url_for('how_it_works') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-info-circle me-2"></i>Learn How
+                    </a>
+                </div>
+                {% else %}
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <a href="{{ url_for('report') }}" class="btn btn-warning btn-lg px-4">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Report Incident
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <svg width="400" height="300" viewBox="0 0 400 300" class="img-fluid">
+                        <!-- Mangrove Trees -->
+                        <g id="mangroves">
+                            <!-- Water -->
+                            <rect x="0" y="200" width="400" height="100" fill="#4A90E2" opacity="0.7"/>
+                            
+                            <!-- Mangrove roots and trunks -->
+                            <g stroke="#8B4513" stroke-width="3" fill="none">
+                                <!-- Tree 1 -->
+                                <path d="M80 200 Q70 180 60 160 Q50 140 40 120" />
+                                <path d="M80 200 Q90 180 100 160 Q110 140 120 120" />
+                                <path d="M80 200 L80 120" />
+                                
+                                <!-- Tree 2 -->
+                                <path d="M200 200 Q190 180 180 160 Q170 140 160 120" />
+                                <path d="M200 200 Q210 180 220 160 Q230 140 240 120" />
+                                <path d="M200 200 L200 120" />
+                                
+                                <!-- Tree 3 -->
+                                <path d="M320 200 Q310 180 300 160 Q290 140 280 120" />
+                                <path d="M320 200 Q330 180 340 160 Q350 140 360 120" />
+                                <path d="M320 200 L320 120" />
+                            </g>
+                            
+                            <!-- Leaves -->
+                            <g fill="#228B22">
+                                <ellipse cx="80" cy="100" rx="25" ry="15"/>
+                                <ellipse cx="200" cy="100" rx="30" ry="18"/>
+                                <ellipse cx="320" cy="100" rx="25" ry="15"/>
+                            </g>
+                            
+                            <!-- Mobile device -->
+                            <g transform="translate(300, 50)">
+                                <rect x="0" y="0" width="30" height="50" rx="5" fill="#333" stroke="#666" stroke-width="1"/>
+                                <rect x="2" y="3" width="26" height="20" fill="#4A90E2"/>
+                                <circle cx="15" cy="40" r="3" fill="#666"/>
+                            </g>
+                            
+                            <!-- Warning symbol -->
+                            <g transform="translate(150, 80)">
+                                <polygon points="0,-10 -8,6 8,6" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+                                <text x="0" y="2" text-anchor="middle" fill="#333" font-size="8" font-weight="bold">!</text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold text-success">Why Mangroves Matter</h2>
+        <p class="lead text-muted">Critical ecosystems under threat, protected by community action</p>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon bg-primary bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-shield-alt text-white fs-4"></i>
+                    </div>
+                    <h5 class="card-title text-success">Coastal Protection</h5>
+                    <p class="card-text text-muted">Natural barriers protecting coastlines from storms, erosion, and rising sea levels.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon bg-success bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-fish text-white fs-4"></i>
+                    </div>
+                    <h5 class="card-title text-success">Biodiversity Hotspots</h5>
+                    <p class="card-text text-muted">Nurseries for countless marine species and critical habitat for wildlife.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon bg-warning bg-gradient rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-users text-white fs-4"></i>
+                    </div>
+                    <h5 class="card-title text-success">Community Livelihoods</h5>
+                    <p class="card-text text-muted">Supporting millions through fishing, tourism, and sustainable resource use.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Threats Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-danger">Under Threat</h2>
+            <p class="lead text-muted">Critical challenges facing mangrove ecosystems worldwide</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-tree text-danger fs-1 mb-3"></i>
+                    <h6 class="fw-bold">Illegal Logging</h6>
+                    <p class="small text-muted">Unsustainable timber and charcoal extraction</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-industry text-danger fs-1 mb-3"></i>
+                    <h6 class="fw-bold">Pollution</h6>
+                    <p class="small text-muted">Industrial waste and plastic contamination</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-tractor text-danger fs-1 mb-3"></i>
+                    <h6 class="fw-bold">Land Reclamation</h6>
+                    <p class="small text-muted">Conversion for agriculture and development</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text-center">
+                    <i class="fas fa-clock text-danger fs-1 mb-3"></i>
+                    <h6 class="fw-bold">Delayed Response</h6>
+                    <p class="small text-muted">Lack of real-time monitoring and intervention</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Solution Section -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold text-success">Our Solution</h2>
+        <p class="lead text-muted">Bridging the gap between communities and conservation</p>
+    </div>
+    
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h3 class="text-success mb-3">Community-Driven Monitoring</h3>
+            <p class="mb-3">
+                We empower those closest to the problem - coastal communities, fishermen, and citizen scientists - 
+                to become active guardians of their environment.
+            </p>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Real-time incident reporting</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mobile-friendly web platform</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Geotagged photo evidence</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Direct connection to authorities</li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <div class="text-center">
+                <svg width="300" height="250" viewBox="0 0 300 250" class="img-fluid">
+                    <!-- Workflow diagram -->
+                    <g>
+                        <!-- Report -->
+                        <circle cx="60" cy="60" r="30" fill="#007bff" opacity="0.8"/>
+                        <text x="60" y="65" text-anchor="middle" fill="white" font-size="10" font-weight="bold">REPORT</text>
+                        
+                        <!-- Validate -->
+                        <circle cx="240" cy="60" r="30" fill="#28a745" opacity="0.8"/>
+                        <text x="240" y="65" text-anchor="middle" fill="white" font-size="10" font-weight="bold">VALIDATE</text>
+                        
+                        <!-- Alert -->
+                        <circle cx="60" cy="190" r="30" fill="#ffc107" opacity="0.8"/>
+                        <text x="60" y="195" text-anchor="middle" fill="black" font-size="10" font-weight="bold">ALERT</text>
+                        
+                        <!-- Act -->
+                        <circle cx="240" cy="190" r="30" fill="#dc3545" opacity="0.8"/>
+                        <text x="240" y="195" text-anchor="middle" fill="white" font-size="10" font-weight="bold">ACT</text>
+                        
+                        <!-- Arrows -->
+                        <path d="M90 60 L210 60" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M240 90 L240 160" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M210 190 L90 190" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M60 160 L60 90" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        
+                        <!-- Arrow marker -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                                    refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                            </marker>
+                        </defs>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-success text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-3">Ready to Make a Difference?</h2>
+        <p class="lead mb-4">Join thousands of community members protecting mangrove ecosystems worldwide</p>
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg px-5">
+            <i class="fas fa-leaf me-2"></i>Start Protecting Now
+        </a>
+        {% else %}
+        <a href="{{ url_for('report') }}" class="btn btn-warning btn-lg px-5">
+            <i class="fas fa-camera me-2"></i>Report an Incident
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

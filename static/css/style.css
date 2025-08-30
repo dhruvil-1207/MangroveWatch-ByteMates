@@ -22,7 +22,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #2c3e50; /* Changed from whitesmoke to dark color */
     background-color: #f8f9fa;
 }
 
@@ -102,6 +102,8 @@ body {
     box-shadow: var(--shadow-light);
     transition: var(--transition-smooth);
     overflow: hidden;
+    background-color: white; /* Ensure white background for cards */
+    color: #2c3e50; /* Dark text for cards */
 }
 
 .card:hover {
@@ -113,6 +115,11 @@ body {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     border-bottom: 1px solid #dee2e6;
     font-weight: 600;
+    color: #2c3e50; /* Dark text for headers */
+}
+
+.card-body {
+    color: #2c3e50; /* Dark text for card bodies */
 }
 
 /* Button Enhancements */
@@ -132,12 +139,14 @@ body {
 .btn-success {
     background: var(--gradient-primary);
     border-color: var(--primary-green);
+    color: white; /* White text on green background */
 }
 
 .btn-success:hover {
     background: var(--primary-green);
     border-color: var(--dark-green);
     box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    color: white; /* Maintain white text on hover */
 }
 
 .btn-outline-success {
@@ -149,6 +158,7 @@ body {
     background: var(--primary-green);
     border-color: var(--primary-green);
     box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    color: white; /* White text when background becomes green */
 }
 
 /* Form Enhancements */
@@ -157,11 +167,14 @@ body {
     border: 1px solid #ced4da;
     padding: 0.75rem 1rem;
     transition: var(--transition-smooth);
+    background-color: white; /* White background for inputs */
+    color: #2c3e50; /* Dark text for inputs */
 }
 
 .form-control:focus {
     border-color: var(--primary-green);
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    color: #2c3e50; /* Maintain dark text on focus */
 }
 
 .form-label {
@@ -174,6 +187,7 @@ body {
     background: #f8f9fa;
     border-color: #ced4da;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
+    color: #495057; /* Dark text for input group text */
 }
 
 /* Alert Enhancements */
@@ -223,7 +237,7 @@ body {
 .stats-card {
     background: var(--gradient-primary);
     border: none;
-    color: white;
+    color: white; /* White text on green background */
     transition: var(--transition-smooth);
 }
 
@@ -235,6 +249,7 @@ body {
 .stats-card .card-body {
     position: relative;
     overflow: hidden;
+    color: white; /* Ensure white text in stats cards */
 }
 
 .stats-card .card-body::before {
@@ -257,6 +272,8 @@ body {
 .report-card {
     transition: var(--transition-smooth);
     border-left: 4px solid #dee2e6 !important;
+    background-color: white; /* White background for report cards */
+    color: #2c3e50; /* Dark text for report cards */
 }
 
 .report-card:hover {
@@ -294,6 +311,7 @@ body {
     position: relative;
     margin-bottom: 1.5rem;
     animation: slideInLeft 0.5s ease-out;
+    color: #2c3e50; /* Dark text for activity items */
 }
 
 .activity-item::before {
@@ -333,6 +351,7 @@ body {
     border-left: 4px solid var(--primary-green);
     margin-top: 1rem;
     animation: fadeIn 0.5s ease-out;
+    color: #2c3e50; /* Dark text for location info */
 }
 
 /* Loading States */
@@ -350,6 +369,58 @@ body {
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     animation: loading 1.5s infinite;
+}
+
+/* Text Content Sections */
+.text-content {
+    color: #2c3e50; /* Dark text for general content */
+}
+
+.text-muted {
+    color: #6c757d !important; /* Muted gray text */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50; /* Dark text for all headings */
+    font-weight: 600;
+}
+
+/* Paragraphs */
+p {
+    color: #495057; /* Slightly lighter dark text for paragraphs */
+}
+
+/* List Items */
+ul, ol, li {
+    color: #495057; /* Dark text for lists */
+}
+
+/* Links */
+a {
+    color: var(--primary-green);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+a:hover {
+    color: var(--dark-green);
+    text-decoration: underline;
+}
+
+/* Tables */
+.table {
+    color: #2c3e50; /* Dark text for tables */
+}
+
+.table th {
+    background-color: var(--light-green);
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.table td {
+    color: #495057;
 }
 
 /* Animations */
@@ -465,6 +536,11 @@ body {
     .report-card {
         margin-bottom: 1rem;
     }
+    
+    body {
+        color: #000 !important; /* Black text for printing */
+        background-color: white !important;
+    }
 }
 
 /* Dark Mode Support */
@@ -478,17 +554,55 @@ body {
     
     body {
         background-color: var(--bg-color);
-        color: var(--text-color);
+        color: var(--text-color); /* Light text for dark mode */
     }
     
     .card {
         background-color: var(--card-bg);
         border-color: var(--border-color);
+        color: var(--text-color); /* Light text for dark mode cards */
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #404040 0%, #2d2d2d 100%);
+        color: var(--text-color);
+    }
+    
+    .card-body {
+        color: var(--text-color);
     }
     
     .form-control {
         background-color: var(--card-bg);
         border-color: var(--border-color);
+        color: var(--text-color);
+    }
+    
+    .input-group-text {
+        background-color: var(--card-bg);
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+    
+    .location-info {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--text-color);
+    }
+    
+    p, li {
+        color: var(--text-color);
+    }
+    
+    .table {
+        color: var(--text-color);
+    }
+    
+    .table th {
+        background-color: var(--card-bg);
         color: var(--text-color);
     }
 }
@@ -526,6 +640,10 @@ body {
     
     .alert {
         border-width: 2px;
+    }
+    
+    body {
+        color: #000 !important; /* Ensure black text in high contrast mode */
     }
 }
 

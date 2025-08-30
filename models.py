@@ -17,8 +17,9 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     active = db.Column(db.Boolean, default=True)
     
-    # Relationship
-    reports = db.relationship('Report', backref='reporter', lazy=True)
+    # Fixed relationships with explicit foreign_keys
+    reports = db.relationship('Report', foreign_keys='Report.user_id', backref='reporter', lazy=True)
+    validated_reports = db.relationship('Report', foreign_keys='Report.validated_by', backref='validator', lazy=True)
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -50,10 +51,8 @@ class Report(db.Model):
     incident_date = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Foreign key
+    # Foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    
-    # Validation fields
     validated_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     validated_at = db.Column(db.DateTime)
     validation_notes = db.Column(db.Text)

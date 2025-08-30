@@ -15,7 +15,7 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(20))
     location = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    is_active = db.Column(db.Boolean, default=True)
+    active = db.Column(db.Boolean, default=True)
     
     # Relationship
     reports = db.relationship('Report', backref='reporter', lazy=True)

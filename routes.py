@@ -79,15 +79,14 @@ def register():
             return render_template('register.html')
         
         # Create new user
-        user = User(
-            username=username,
-            email=email,
-            full_name=full_name,
-            organization=organization,
-            user_type=user_type,
-            phone=phone,
-            location=location
-        )
+        user = User()
+        user.username = username
+        user.email = email
+        user.full_name = full_name
+        user.organization = organization
+        user.user_type = user_type
+        user.phone = phone
+        user.location = location
         user.set_password(password)
         
         db.session.add(user)
@@ -139,6 +138,9 @@ def submit_report():
         
         # Parse incident date
         try:
+            if not incident_date_str:
+                flash('Incident date is required.', 'error')
+                return redirect(url_for('report'))
             incident_date = datetime.strptime(incident_date_str, '%Y-%m-%d')
         except ValueError:
             flash('Invalid date format.', 'error')
@@ -161,18 +163,17 @@ def submit_report():
                 file.save(file_path)
         
         # Create report
-        report = Report(
-            title=title,
-            description=description,
-            incident_type=incident_type,
-            severity=severity,
-            incident_date=incident_date,
-            latitude=float(latitude) if latitude else None,
-            longitude=float(longitude) if longitude else None,
-            location_name=location_name,
-            photo_filename=photo_filename,
-            user_id=current_user.id
-        )
+        report = Report()
+        report.title = title
+        report.description = description
+        report.incident_type = incident_type
+        report.severity = severity
+        report.incident_date = incident_date
+        report.latitude = float(latitude) if latitude else None
+        report.longitude = float(longitude) if longitude else None
+        report.location_name = location_name
+        report.photo_filename = photo_filename
+        report.user_id = current_user.id
         
         db.session.add(report)
         db.session.commit()

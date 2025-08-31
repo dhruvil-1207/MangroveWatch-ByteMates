@@ -111,7 +111,7 @@
             <div class="card bg-info text-white h-100">
                 <div class="card-body text-center">
                     <i class="fas fa-check-circle fs-1 mb-2 opacity-75"></i>
-                    <h4 class="mb-1">{{ all_reports|selectattr('status', 'equalto', 'validated')|list|length }}</h4>
+                    <h4 class="mb-1">{{ all_reports|selectattr('status', 'equalto', 'auto_validated')|list|length }}</h4>
                     <p class="mb-0 small">Validated</p>
                 </div>
             </div>
@@ -121,7 +121,7 @@
             <div class="card bg-info text-white h-100">
                 <div class="card-body text-center">
                     <i class="fas fa-check-circle fs-1 mb-2 opacity-75"></i>
-                    <h4 class="mb-1">{{ user_reports|selectattr('status', 'equalto', 'validated')|list|length }}</h4>
+                    <h4 class="mb-1">{{ user_reports|selectattr('status', 'equalto', 'auto_validated')|list|length }}</h4>
                     <p class="mb-0 small">Validated</p>
                 </div>
             </div>
@@ -186,11 +186,12 @@
                                         <div class="d-flex gap-2">
                                             <span class="badge 
                                                 {% if report.status == 'pending' %}bg-warning
-                                                {% elif report.status == 'validated' %}bg-success
+                                                {% elif report.status == 'auto_validated' %}bg-success
                                                 {% elif report.status == 'investigating' %}bg-info
                                                 {% elif report.status == 'resolved' %}bg-primary
+                                                {% elif report.status == 'flagged' %}bg-danger
                                                 {% else %}bg-secondary{% endif %} status-badge">
-                                                {{ report.status.title() }}
+                                                {{ report.status.title().replace('_', ' ') }}
                                             </span>
                                             <span class="badge 
                                                 {% if report.severity == 'critical' %}bg-danger

@@ -118,9 +118,10 @@ def logout():
     return redirect(url_for('index'))
 
 
-# Temporarily bypass login and mock current_user for testing
+# Updated /dashboard route to show recent and validated reports separately
 @app.route('/dashboard')
 def dashboard():
+    # Mock user for testing: set appropriate user id and type
     class MockUser:
         id = 1
         user_type = 'authority'
@@ -128,14 +129,30 @@ def dashboard():
     global current_user
     current_user = MockUser()
 
+    # Fetch the current user's reports, recent reports, and validated reports
     user_reports = Report.query.filter_by(user_id=current_user.id).order_by(Report.created_at.desc()).all()
 
+    # Get recent reports (latest 10)
+    recent_reports = Report.query.order_by(Report.created_at.desc()).limit(10).all()
+
+    # Get validated reports (status = 'auto_validated', latest 10)
+    validated_reports = Report.query.filter_by(status='auto_validated').order_by(Report.created_at.desc()).limit(10).all()
+
+    # For authority users, show all reports (recent 50)
     if current_user.user_type == 'authority':
         all_reports = Report.query.order_by(Report.created_at.desc()).limit(50).all()
     else:
         all_reports = []
 
-    return render_template('dashboard.html', user_reports=user_reports, all_reports=all_reports)
+    # Pass all needed lists into the template
+    return render_template(
+        'dashboard.html', 
+        user_reports=user_reports, 
+        all_reports=all_reports,
+        recent_reports=recent_reports,
+        validated_reports=validated_reports
+    )
+
 
 
 def simple_ai_validator(report_data):

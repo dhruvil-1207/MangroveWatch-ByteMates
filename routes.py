@@ -8,6 +8,11 @@ from app import app, db
 from models import User, Report
 import uuid
 import re
+import asyncio
+import json
+
+# ✅ AI Validator import
+from ai_validator import real_ai_validator
 
 
 def allowed_file(filename):
@@ -173,7 +178,7 @@ def submit_report():
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], photo_filename)
                 file.save(file_path)
 
-        # Create report (AI validation will be handled by RealMangroveAI separately)
+        # Create report (default pending before AI validation)
         report = Report()
         report.title = title
         report.description = description
@@ -185,10 +190,36 @@ def submit_report():
         report.location_name = location_name
         report.photo_filename = photo_filename
         report.user_id = current_user.id
-        report.status = 'pending'  # default before AI validator runs
+        report.status = 'pending'
 
         db.session.add(report)
         db.session.commit()
+
+        # ✅ Run AI Validator after saving
+        try:
+            report_data = {
+                "title": report.title,
+                "description": report.description,
+                "incident_type": report.incident_type,
+                "latitude": report.latitude,
+                "longitude": report.longitude,
+                "photo_filename": report.photo_filename
+            }
+
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                ai_task = asyncio.ensure_future(real_ai_validator.validate_report_ai(report_data))
+                ai_result = loop.run_until_complete(ai_task)
+            else:
+                ai_result = loop.run_until_complete(real_ai_validator.validate_report_ai(report_data))
+
+            if ai_result:
+                report.status = ai_result.get("validation_status", "pending")
+                report.validation_notes = json.dumps(ai_result)
+                db.session.commit()
+
+        except Exception as e:
+            app.logger.error(f"AI validation failed: {e}")
 
         flash(f'Report submitted. Pending AI validation.', 'info')
         return redirect(url_for('dashboard'))

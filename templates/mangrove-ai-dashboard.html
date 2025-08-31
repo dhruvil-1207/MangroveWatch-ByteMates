@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Community Mangrove Watch – AI Validator</title>
+
+  <!-- Bootstrap 5 (for layout + components that style.css enhances) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Icons (optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfS2B1hC6ZQetxZB6YhQZ5GxEufG4p3xG/8xY1YdwG8Q4S7Yp1dO9Q2w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Project styles (provided by you) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* Small extras for the dashboard only (kept minimal to honor style.css) */
+    .pointer { cursor: pointer; }
+    .map-placeholder { height: 260px; background: #e9f7ef; border-radius: var(--border-radius); display:flex; align-items:center; justify-content:center; border-left:4px solid var(--primary-green); }
+    .progress-sm { height: .6rem; }
+    .code-block { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .85rem; }
+  </style>
+</head>
+<body class="bg-light">
+
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-secondary shadow-custom">
+    <div class="container">
+      <a class="navbar-brand" href="#">Mangrove Watch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbars">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#validator">AI Validator</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reports">Reports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#settings">Settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero-section py-5 mb-4">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h1 class="display-5 fw-bold">AI Validation Dashboard</h1>
+          <p class="lead mb-4">Verify community reports of mangrove damage with ML, geospatial checks, and satellite signals. Upload a report, and the validator will score credibility and surface risk flags.</p>
+          <div class="d-flex gap-2">
+            <a href="#validator" class="btn btn-success"><i class="fa-solid fa-robot me-2"></i>Run Validation</a>
+            <button class="btn btn-outline-success" id="demoBtn"><i class="fa-regular fa-circle-play me-2"></i>Quick Demo</button>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card stats-card shadow-custom">
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6 text-center">
+                  <h3 id="stat-validated" class="mb-0">0</h3>
+                  <small class="text-white-50">Validated Today</small>
+                </div>
+                <div class="col-6 text-center">
+                  <h3 id="stat-accuracy" class="mb-0">—</h3>
+                  <small class="text-white-50">Avg. Confidence</small>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="progress progress-sm bg-opacity-25">
+                  <div id="stat-progress" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-white-50">Rolling success over last 10 reports</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container" id="validator">
+    <div class="row g-4">
+      <!-- INPUT PANEL -->
+      <div class="col-lg-5">
+        <div class="card shadow-custom light-mode-forms">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <span><i class="fa-solid fa-clipboard-check me-2 text-success"></i>Submit Report for Validation</span>
+            <span class="badge bg-success-subtle text-success border border-success status-badge" id="apiMode">Client-only</span>
+          </div>
+          <div class="card-body">
+            <form id="reportForm" class="needs-validation" novalidate>
+              <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input id="title" name="title" type="text" class="form-control" placeholder="Illegal cutting observed near estuary" required />
+                <div class="invalid-feedback">Please enter a title.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="5" placeholder="Describe what you saw, when, and any context…" required></textarea>
+                <div class="invalid-feedback">Please enter a description.</div>
+                <small class="form-text">Tip: Specific, factual language increases credibility.</small>
+              </div>
+              <div class="row g-3 mb-3">
+                <div class="col-6">
+                  <label class="form-label" for="latitude">Latitude</label>
+                  <input id="latitude" name="latitude" type="number" step="any" class="form-control" placeholder="16.994" required />
+                  <div class="invalid-feedback">Latitude required.</div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label" for="longitude">Longitude</label>
+                  <input id="longitude" name="longitude" type="number" step="any" class="form-control" placeholder="73.293" required />
+                  <div class="invalid-feedback">Longitude required.</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="photo">Photo (optional)</label>
+                <input id="photo" name="photo" type="file" accept="image/*" class="form-control" />
+                <div class="d-flex align-items-center gap-3 mt-2">
+                  <img id="photoPreview" class="photo-preview d-none" alt="Preview" />
+                  <small class="text-muted">Images with EXIF & clear vegetation help authenticity.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="location-info">
+                  <div class="d-flex align-items-center gap-2"><i class="fa-solid fa-location-dot"></i><strong> Map preview</strong></div>
+                  <div class="map-placeholder mt-2" id="mapBox">Coordinates will render here.</div>
+                </div>
+              </div>
+              <div class="d-grid gap-2">
+                <button class="btn btn-success" type="submit"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Validate</button>
+                <button class="btn btn-outline-success" type="button" id="resetBtn"><i class="fa-solid fa-rotate me-2"></i>Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- OUTPUT PANEL -->
+      <div class="col-lg-7" id="reports">
+        <div class="card shadow-custom mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <span><i class="fa-solid fa-gauge-high me-2 text-success"></i>Validation Result</span>
+            <span id="statusPill" class="badge bg-secondary status-badge">Waiting</span>
+          </div>
+          <div class="card-body" id="resultBody">
+            <div class="alert alert-info mb-0">
+              <i class="fa-regular fa-lightbulb me-2"></i> Submit a report to see AI scores, risk flags, and recommendations.
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="card report-card">
+              <div class="card-header"><i class="fa-solid fa-microchip me-2 text-success"></i>AI Breakdown</div>
+              <div class="card-body">
+                <div id="aiBreakdown" class="text-content small">
+                  <p class="mb-2 text-muted">Geography / Text / Photo / Satellite components with weights.</p>
+                  <div class="d-flex justify-content-between"><span>Geography</span><span><strong id="wg"></strong></span></div>
+                  <div class="progress progress-sm mb-2"><div id="pg" class="progress-bar" style="width:0%"></div></div>
+                  <div class="d-flex justify-content-between"><span>Text</span><span><strong id="wt"></strong></span></div>
+                  <div class="progress progress-sm mb-2"><div id="pt" class="progress-bar" style="width:0%"></div></div>
+                  <div class="d-flex justify-content-between"><span>Photo</span><span><strong id="wp"></strong></span></div>
+                  <div class="progress progress-sm mb-2"><div id="pp" class="progress-bar" style="width:0%"></div></div>
+                  <div class="d-flex justify-content-between"><span>Satellite</span><span><strong id="ws"></strong></span></div>
+                  <div class="progress progress-sm"><div id="ps" class="progress-bar" style="width:0%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card report-card">
+              <div class="card-header"><i class="fa-solid fa-flag me-2 text-danger"></i>Risk & Activity</div>
+              <div class="card-body">
+                <div id="riskFlags" class="mb-3"></div>
+                <div class="activity-timeline" id="timeline"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-header"><i class="fa-solid fa-code me-2 text-success"></i>Raw JSON</div>
+          <div class="card-body">
+            <pre id="rawJson" class="code-block m-0">{ }</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-5 py-4 border-top">
+    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+      <div class="small text-muted">© <span id="y"></span> Community Mangrove Watch</div>
+      <div class="small"><i class="fa-solid fa-shield-halved me-1 text-success"></i>Privacy-first. API keys never leave your server.</div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- Dashboard Logic -->
+  <script>
+    const API = {
+      // Point this to your backend. If null, the dashboard will run in demo/client mode.
+      VALIDATE_URL: null,           // e.g., "/api/validate"
+      UPLOAD_URL: null              // e.g., "/api/upload"
+    };
+
+    const weights = { geography: 0.3, text: 0.25, photo: 0.25, satellite: 0.2 };
+
+    const el = (id) => document.getElementById(id);
+
+    // Footer year
+    el('y').textContent = new Date().getFullYear();
+
+    // API mode pill
+    function paintApiMode(){
+      const pill = el('apiMode');
+      if (API.VALIDATE_URL) {
+        pill.textContent = 'Server API';
+        pill.className = 'badge bg-success text-white status-badge';
+      } else {
+        pill.textContent = 'Client-only';
+        pill.className = 'badge bg-warning text-dark status-badge';
+      }
+    }
+    paintApiMode();
+
+    // Photo preview
+    el('photo').addEventListener('change', (e) => {
+      const f = e.target.files?.[0];
+      const p = el('photoPreview');
+      if (!f) { p.classList.add('d-none'); return; }
+      const url = URL.createObjectURL(f);
+      p.src = url; p.classList.remove('d-none');
+    });
+
+    // Simple map placeholder render
+    function renderMap(lat, lng){
+      const m = el('mapBox');
+      m.textContent = `Lat: ${Number(lat).toFixed(5)}, Lng: ${Number(lng).toFixed(5)}`;
+    }
+
+    // Quick demo
+    el('demoBtn').addEventListener('click', () => {
+      el('title').value = 'Fresh mangrove cutting near the creek';
+      el('description').value = 'Observed fresh stumps and saw marks along the coastal creek at dawn on Aug 18. Strong smell of diesel nearby; possible illegal logging activity.';
+      el('latitude').value = 16.9942;
+      el('longitude').value = 73.2931;
+      renderMap(16.9942, 73.2931);
+      document.getElementById('title').focus();
+    });
+
+    // Reset
+    el('resetBtn').addEventListener('click', () => {
+      el('reportForm').reset();
+      el('photoPreview').classList.add('d-none');
+      el('mapBox').textContent = 'Coordinates will render here.';
+      el('resultBody').innerHTML = `<div class="alert alert-info mb-0"><i class="fa-regular fa-lightbulb me-2"></i> Submit a report to see AI scores, risk flags, and recommendations.</div>`;
+      el('statusPill').textContent = 'Waiting';
+      el('statusPill').className = 'badge bg-secondary status-badge';
+      el('rawJson').textContent = '{ }';
+      ['pg','pt','pp','ps'].forEach(id => el(id).style.width='0%');
+      ['wg','wt','wp','ws'].forEach(id => el(id).textContent='');
+    });
+
+    // Form validation + submit
+    const form = el('reportForm');
+    form.addEventListener('input', () => {
+      const lat = el('latitude').value, lng = el('longitude').value;
+      if (lat && lng && !isNaN(lat) && !isNaN(lng)) renderMap(lat, lng);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
+
+      // Collect data
+      const data = {
+        title: el('title').value.trim(),
+        description: el('description').value.trim(),
+        latitude: parseFloat(el('latitude').value),
+        longitude: parseFloat(el('longitude').value)
+      };
+
+      // UI: loading
+      el('resultBody').classList.add('loading');
+      el('resultBody').innerHTML = `<div class="text-center py-4"><div class="spinner-border text-success" role="status"></div><div class="mt-2 text-muted">Running AI validation…</div></div>`;
+      el('statusPill').textContent = 'Processing';
+      el('statusPill').className = 'badge bg-info text-dark status-badge';
+
+      try {
+        // If API endpoints are set, optionally upload photo first
+        let photoFilename = null;
+        const file = el('photo').files?.[0];
+
+        if (API.UPLOAD_URL && file) {
+          const fd = new FormData();
+          fd.append('file', file);
+          const upRes = await fetch(API.UPLOAD_URL, { method: 'POST', body: fd });
+          if (upRes.ok) {
+            const upJson = await upRes.json();
+            // Expect { filename: '...' }
+            photoFilename = upJson.filename || null;
+          }
+        }
+
+        // Prepare payload for validator
+        const payload = { ...data, photo_filename: photoFilename };
+
+        let result;
+        if (API.VALIDATE_URL) {
+          const res = await fetch(API.VALIDATE_URL, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(await res.text());
+          result = await res.json();
+        } else {
+          // Client-only demo: compute rough pseudo-scores to mimic backend
+          result = await clientOnlyValidate(payload);
+        }
+
+        paintResult(result);
+        saveHistory(result);
+        updateStats();
+      } catch (err) {
+        console.error(err);
+        el('resultBody').classList.remove('loading');
+        el('resultBody').innerHTML = `<div class="alert alert-danger"><strong>Error:</strong> ${String(err)}</div>`;
+        el('statusPill').textContent = 'Error';
+        el('statusPill').className = 'badge bg-danger status-badge';
+      }
+    });
+
+    // Paint result into the UI
+    function paintResult(result){
+      el('resultBody').classList.remove('loading');
+
+      const conf = result.confidence_score ?? 0;
+      const status = result.validation_status || 'pending_review';
+      const ai = result.ai_analysis || {};
+      const recs = result.recommendations || [];
+      const flags = result.risk_flags || [];
+
+      // Status pill
+      const statusMap = {
+        auto_validated: { cls: 'bg-success', label: 'Auto Validated' },
+        pending_review: { cls: 'bg-warning text-dark', label: 'Pending Review' },
+        flagged: { cls: 'bg-danger', label: 'Flagged' }
+      };
+      const sp = statusMap[status] || { cls: 'bg-secondary', label: status };
+      el('statusPill').textContent = `${sp.label} · ${conf.toFixed(1)}%`;
+      el('statusPill').className = `badge ${sp.cls} status-badge`;
+
+      // Body content
+      el('resultBody').innerHTML = `
+        <div class="row g-3 align-items-center">
+          <div class="col-sm-7">
+            <div class="d-flex align-items-center gap-3">
+              <div class="display-6 text-success fw-bold">${conf.toFixed(1)}%</div>
+              <div>
+                <div class="fw-semibold">Overall Confidence Score</div>
+                <small class="text-muted">${result.processing_timestamp ? new Date(result.processing_timestamp).toLocaleString() : ''}</small>
+              </div>
+            </div>
+            <div class="mt-3">
+              ${(recs||[]).map(r => `<div class="alert alert-success py-2 mb-2"><i class=\"fa-solid fa-check me-2\"></i>${escapeHtml(r)}</div>`).join('')}
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="d-flex justify-content-between small mb-1"><span>Confidence</span><span>${conf.toFixed(1)}%</span></div>
+                <div class="progress progress-sm mb-2"><div class="progress-bar" style="width:${conf}%"></div></div>
+                <div class="small text-muted"><i class="fa-regular fa-compass me-1"></i>${ai?.geography?.analysis || '—'}</div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+      // Risk flags
+      el('riskFlags').innerHTML = flags.length
+        ? flags.map(f => `<div class="alert alert-warning py-2 mb-2"><i class=\"fa-solid fa-triangle-exclamation me-2\"></i>${escapeHtml(f)}</div>`).join('')
+        : '<div class="alert alert-success py-2 mb-0"><i class="fa-regular fa-square-check me-2"></i>No risk flags detected.</div>';
+
+      // Breakdown progress bars
+      const g = (ai.geography?.score ?? 0) * 100;
+      const t = (ai.text_analysis?.credibility_score ?? 0) * 100;
+      const p = (ai.photo_analysis?.authenticity_score ?? 0) * 100;
+      const s = (ai.satellite?.score ?? 0) * 100;
+      el('pg').style.width = `${g}%`; el('wg').textContent = `${weights.geography * 100}% · ${g.toFixed(0)}%`;
+      el('pt').style.width = `${t}%`; el('wt').textContent = `${weights.text * 100}% · ${t.toFixed(0)}%`;
+      el('pp').style.width = `${p}%`; el('wp').textContent = `${weights.photo * 100}% · ${p.toFixed(0)}%`;
+      el('ps').style.width = `${s}%`; el('ws').textContent = `${weights.satellite * 100}% · ${s.toFixed(0)}%`;
+
+      // Timeline
+      addTimelineItem(status);
+
+      // Raw JSON
+      el('rawJson').textContent = JSON.stringify(result, null, 2);
+    }
+
+    // Escape HTML
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
+    }
+
+    // Client-only demo logic to mimic backend behavior
+    async function clientOnlyValidate(payload){
+      // derive pseudo scores
+      const desc = payload.description || '';
+      const title = payload.title || '';
+      const text = `${title} ${desc}`.toLowerCase();
+      const envTerms = ['mangrove','deforestation','illegal','pollution','ecosystem','biodiversity','coastal','erosion','habitat'];
+      const found = envTerms.reduce((n,t)=> n + (text.includes(t) ? 1 : 0), 0);
+      const textCred = Math.min(0.4 + (desc.length>50?0.2:0) + (found/10), 1);
+
+      const geoScore = 0.3 + (nearCoast(payload.latitude, payload.longitude) ? 0.3 : 0);
+      const photoScore = (payload.photo_filename? 0.7 : 0.5);
+      const satScore = 0.6;
+
+      const overall = geoScore*weights.geography + textCred*weights.text + photoScore*weights.photo + satScore*weights.satellite;
+      const status = overall>=0.75? 'auto_validated' : (overall>=0.5? 'pending_review' : 'flagged');
+
+      const result = {
+        confidence_score: +(overall*100).toFixed(1),
+        validation_status: status,
+        ai_analysis: {
+          geography: { score: +(geoScore.toFixed(2)), analysis: `Coastal validation (approx): ${geoScore.toFixed(1)}` },
+          text_analysis: { credibility_score: +textCred.toFixed(2) },
+          photo_analysis: { authenticity_score: +photoScore.toFixed(2) },
+          satellite: { score: +satScore.toFixed(2), analysis: 'Client demo only' }
+        },
+        risk_flags: [],
+        recommendations: status==='auto_validated' ? ['Report appears highly credible','Auto-approved for publication'] : (status==='pending_review' ? ['Moderate confidence','Requires manual review'] : ['Low confidence score','Flagged for detailed investigation']),
+        processing_timestamp: new Date().toISOString()
+      };
+
+      if (text.includes('spam') || text.includes('http://') || text.includes('https://')) {
+        result.risk_flags.push('Possible spam indicators in text');
+      }
+      if (geoScore < 0.3) result.risk_flags.push('Location not verified as mangrove habitat');
+      if (photoScore < 0.4) result.risk_flags.push('Photo authenticity questionable');
+
+      return new Promise(r => setTimeout(()=> r(result), 800));
+    }
+
+    // simple faux "near coast" heuristic for demo
+    function nearCoast(lat, lng){
+      // pretend lat within 0.6deg of 0 or within typical coastal ranges improves score (demo only)
+      return Math.abs(lat % 10) < 1.0 || Math.abs(lng % 10) < 1.0;
+    }
+
+    // Activity timeline
+    function addTimelineItem(status){
+      const tl = el('timeline');
+      const label = {
+        auto_validated: 'Auto validated by AI',
+        pending_review: 'Queued for manual review',
+        flagged: 'Flagged for investigation'
+      }[status] || 'Processed';
+      const item = document.createElement('div');
+      item.className = 'activity-item';
+      item.innerHTML = `<div class="small">${new Date().toLocaleString()}</div><div>${label}</div>`;
+      tl.prepend(item);
+    }
+
+    // Persist last 10 results
+    function saveHistory(result){
+      const key = 'mw_history_v1';
+      const arr = JSON.parse(localStorage.getItem(key) || '[]');
+      arr.unshift({ t: Date.now(), s: result.validation_status, c: result.confidence_score });
+      while (arr.length>10) arr.pop();
+      localStorage.setItem(key, JSON.stringify(arr));
+    }
+
+    function updateStats(){
+      const key = 'mw_history_v1';
+      const arr = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!arr.length){ el('stat-validated').textContent = '0'; el('stat-accuracy').textContent = '—'; el('stat-progress').style.width='0%'; return; }
+      const today = new Date(); today.setHours(0,0,0,0);
+      const validatedToday = arr.filter(x => x.t >= today.getTime()).length;
+      const avg = arr.reduce((n,x)=> n+x.c, 0) / arr.length;
+      el('stat-validated').textContent = String(validatedToday);
+      el('stat-accuracy').textContent = avg.toFixed(0) + '%';
+      el('stat-progress').style.width = Math.min(100, avg).toFixed(0) + '%';
+      el('stat-progress').setAttribute('aria-valuenow', Math.min(100, avg).toFixed(0));
+    }
+
+    updateStats();
+  </script>
+</body>
+</html>

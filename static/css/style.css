@@ -95,6 +95,21 @@ body {
     transform: translateY(-1px);
 }
 
+/* Fix: Navbar Sign Up button white background text color issue */
+.navbar .nav-link.active,
+.navbar .nav-link.signup-active {
+    background-color: #ffffff !important;
+    color: #28a745 !important; /* Green text for contrast */
+    font-weight: 700;
+    border-radius: var(--border-radius);
+}
+
+.navbar .nav-link.active:hover,
+.navbar .nav-link.signup-active:hover {
+    color: #20c997 !important; /* Accent green on hover */
+    background-color: #f8f9fa !important; /* Light gray for hover bg */
+}
+
 /* Card Enhancements */
 .card {
     border: none;
